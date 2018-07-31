@@ -1,0 +1,73 @@
+# help is defined in 
+# https://gist.github.com/rcmachado/af3db315e31383502660
+help:
+	$(info --------------------------------------- )	
+	$(info Available targets)
+	$(info --------------------------------------- )
+	@awk '/^[a-zA-Z\-\_0-9]+:/ {                    \
+	  nb = sub( /^## /, "", helpMsg );              \
+	  if(nb == 0) {                                 \
+	    helpMsg = $$0;                              \
+	    nb = sub( /^[^:]*:.* ## /, "", helpMsg );   \
+	  }                                             \
+	  if (nb)                                       \
+	    print  $$1 "\t" helpMsg;                    \
+	}                                               \
+	{ helpMsg = $$0 }'                              \
+	$(MAKEFILE_LIST) | column -ts:	
+
+## same as 'make epics'
+all: epics  
+
+## Setup EPICS Environment
+epics: base modules 
+
+## Setup only EPICS BASE, needed to execute modules
+base: 
+	$(MAKE) -C $(EPICS_BASE)
+
+
+## Setup only EPICS modules, useful to switch different module version
+modules: 
+	$(MAKE) -C $(EPICS_MODULES)
+
+## Clean BASE and all modules
+clean: modules-clean base-clean
+	rm -f *~
+
+# Clean only base, so, all modules should be clean also.
+base-clean:
+	$(MAKE) -C $(EPICS_BASE) clean
+
+# In the case that modules-release never be executed before,
+# it will reduce the error messages during make
+
+## Clean only all modules
+modules-clean: modules-release
+	$(MAKE) -C $(EPICS_MODULES) clean
+
+# Makefile in modules runs "release" internally
+modules-release: 
+	$(MAKE) -C $(EPICS_MODULES) release
+
+## Print basic EPICS environment variables
+env:
+	@echo ""
+	@echo "EPICS_BASE          : "$(EPICS_BASE)
+	@echo "EPICS_MODULES       : "$(EPICS_MODULES)
+	@echo "EPICS_HOST_ARCH     : "$(EPICS_HOST_ARCH)
+	@echo ""
+
+
+
+# Exclude EPICS_MODULES
+M_DIRS:=$(sort $(dir $(wildcard $(EPICS_MODULES)/*/.)))
+
+dirs:
+	@echo $(M_DIRS) || true
+
+
+
+
+
+.PHONY: all epics base modules 
