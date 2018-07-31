@@ -111,12 +111,4 @@ dirs:
 	@echo $(findstring asyn, $(M_DIRS))
 
 
-
-# # In case, .gitmodules may be modified.
-# # 
-# git-msync:
-# 	git submodule sync
-
-
-
-.PHONY: all clean release dirs $(M_DIRS) 
+.PHONY: all modules release clean dirs $(M_DIRS) 

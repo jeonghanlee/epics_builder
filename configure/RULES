@@ -50,6 +50,9 @@ modules-clean: modules-release
 modules-release: 
 	$(MAKE) -C $(EPICS_MODULES) release
 
+
+vars: env
+
 ## Print basic EPICS environment variables
 env:
 	@echo ""
@@ -67,7 +70,8 @@ dirs:
 	@echo $(M_DIRS) || true
 
 
+init:
+	cd $(EPICS_BASE) && git submodule update --init --reference ./
+	
 
-
-
-.PHONY: all epics base modules 
+.PHONY: help all epics base modules clean base-clean modules-clean modules-release env dirs init vars
