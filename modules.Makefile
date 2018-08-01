@@ -6,6 +6,7 @@ M_AUTOSAVE=$(EPICS_MODULES)/autosave
 M_IPAC=$(EPICS_MODULES)/ipac
 M_DEVLIB2=$(EPICS_MODULES)/devlib2
 M_SNCSEQ=$(EPICS_MODULES)/seq
+M_SNMP=$(EPICS_MODULES)/snmp
 #BASE[o], SNCSEQ[o]
 M_IOCSTATS=$(EPICS_MODULES)/iocStats
 M_SSCAN=$(EPICS_MODULES)/sscan
@@ -38,6 +39,7 @@ modules: release
 	$(MAKE) -C $(M_IPAC)
 	$(MAKE) -C $(M_DEVLIB2)
 	$(MAKE) -C $(M_SNCSEQ)
+	$(MAKE) -C $(M_SNMP)
 #	BASE[o], SNCSEQ[o]
 	$(MAKE) -C $(M_IOCSTATS)
 	$(MAKE) -C $(M_SSCAN)
@@ -65,7 +67,7 @@ release:
 	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_IPAC)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_DEVLIB2)/configure/RELEASE.local
 	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_SNCSEQ)/configure/RELEASE
-
+	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_SNMP)/configure/RELEASE
 #	BASE[o], SNCSEQ[o]
 	echo "SNCSEQ=$(M_SNCSEQ)"        > $(M_IOCSTATS)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_IOCSTATS)/configure/RELEASE
