@@ -80,10 +80,8 @@ repo sync --force-sync --no-clone-bundle
 
 ## References and comments
 
-[1] https://github.com/jeonghanlee/epics_manifest
-
-[2] https://gerrit.googlesource.com/git-repo/
-
-[3] default.xml is the symbolic link to epics_1808.xml
+[1] https://github.com/jeonghanlee/epics_manifest   
+[2] https://gerrit.googlesource.com/git-repo/    
+[3] default.xml is the symbolic link to epics_1808.xml   
 
 
