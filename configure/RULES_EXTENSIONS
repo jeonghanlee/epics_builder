@@ -1,0 +1,16 @@
+
+init-exts:
+	cd $(EPICS_EXTENSIONS) && git submodule update --init --reference ./
+
+exts: exts-release
+	$(MAKE) -C $(EPICS_EXTENSIONS)
+
+exts-clean: exts-release
+	$(MAKE) -C $(EPICS_EXTENSIONS) clean
+
+# Makefile in extensions runs "release" internally
+exts-release:
+	echo "EPICS_BASE=$(EPICS_BASE)"  > $(EPICS_EXTENSIONS)/configure/RELEASE.local
+
+
+.PHONY: init-exts exts exts-clean exts-release

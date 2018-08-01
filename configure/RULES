@@ -22,34 +22,9 @@ all: epics
 ## Setup EPICS Environment
 epics: base modules 
 
-## Setup only EPICS BASE, needed to execute modules
-base: 
-	$(MAKE) -C $(EPICS_BASE)
-
-
-## Setup only EPICS modules, useful to switch different module version
-modules: 
-	$(MAKE) -C $(EPICS_MODULES)
-
 ## Clean BASE and all modules
 clean: modules-clean base-clean
 	rm -f *~
-
-# Clean only base, so, all modules should be clean also.
-base-clean:
-	$(MAKE) -C $(EPICS_BASE) clean
-
-# In the case that modules-release never be executed before,
-# it will reduce the error messages during make
-
-## Clean only all modules
-modules-clean: modules-release
-	$(MAKE) -C $(EPICS_MODULES) clean
-
-# Makefile in modules runs "release" internally
-modules-release: 
-	$(MAKE) -C $(EPICS_MODULES) release
-
 
 vars: env
 
@@ -62,7 +37,6 @@ env:
 	@echo ""
 
 
-
 # Exclude EPICS_MODULES
 M_DIRS:=$(sort $(dir $(wildcard $(EPICS_MODULES)/*/.)))
 
@@ -70,8 +44,14 @@ dirs:
 	@echo $(M_DIRS) || true
 
 
-init:
-	cd $(EPICS_BASE) && git submodule update --init --reference ./
-	
 
-.PHONY: help all epics base modules clean base-clean modules-clean modules-release env dirs init vars
+.PHONY: help all epics clean vars env dirs
+
+
+
+include $(TOP)/builder/configure/RULES_BASE
+include $(TOP)/builder/configure/RULES_MODULES
+include $(TOP)/builder/configure/RULES_EXTENSIONS
+
+
+

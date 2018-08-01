@@ -1,0 +1,19 @@
+
+
+init:
+	cd $(EPICS_BASE) && git submodule update --init --reference ./
+	
+
+## Setup only EPICS BASE, needed to execute modules
+base: 
+	$(MAKE) -C $(EPICS_BASE)
+
+# Clean only base, so, all modules should be clean also.
+base-clean:
+	$(MAKE) -C $(EPICS_BASE) clean
+
+
+
+.PHONY: base base-clean init
+
+

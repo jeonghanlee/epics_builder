@@ -1,0 +1,17 @@
+
+
+
+## Setup only EPICS modules, useful to switch different module version
+modules: 
+	$(MAKE) -C $(EPICS_MODULES)
+
+
+## Clean only all modules
+modules-clean: modules-release
+	$(MAKE) -C $(EPICS_MODULES) clean
+
+
+# Makefile in modules runs "release" internally
+modules-release: 
+	$(MAKE) -C $(EPICS_MODULES) release
+
