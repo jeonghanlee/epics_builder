@@ -46,10 +46,11 @@ modules: release
 #	BASE[o], ASYN[o]
 	$(MAKE) -C $(M_BUSY)
 	$(MAKE) -C $(M_MODBUS)
+	cd $(M_STREAM) && git submodule update --init --reference ./
 	$(MAKE) -C $(M_STREAM)
-	$(MAKE) -C $(M_STD)
 #	BASE[o], SSCAN[o], SNCSEQ[o]
 	$(MAKE) -C $(M_CALC)
+	$(MAKE) -C $(M_STD)
 	$(MAKE) -C $(M_IP)
 #	BASE[o], ASYN[o], BUSY[o], IPAC[o], SNCSEQ[o]
 	$(MAKE) -C $(M_MOTOR)
@@ -81,13 +82,18 @@ release:
 	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_MODBUS)/configure/RELEASE
 	echo "ASYN=$(M_ASYN)"            > $(M_STREAM)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_STREAM)/configure/RELEASE
-	echo "ASYN=$(M_ASYN)"            > $(M_STD)/configure/RELEASE
-	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_STD)/configure/RELEASE
+
 #	BASE[o], SSCAN[o], SNCSEQ[o]
 	echo "SSCAN=$(M_SSCAN)"          > $(M_CALC)/configure/RELEASE
 	echo "SNCSEQ=$(M_SNCSEQ)"       >> $(M_CALC)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_CALC)/configure/RELEASE
-	echo "SSCAN=$(M_SSCAN)"          > $(M_IP)/configure/RELEASE
+#	BASE[o], ASYN[o] SNCSEQ[o]
+	echo "ASYN=$(M_ASYN)"            > $(M_STD)/configure/RELEASE
+	echo "SNCSEQ=$(M_SNCSEQ)"       >> $(M_STD)/configure/RELEASE
+	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_STD)/configure/RELEASE
+#	BASE[o], SSCAN[o], SNCSEQ[o],  ASYN[o]
+	echo "ASYN=$(M_ASYN)"            > $(M_IP)/configure/RELEASE
+	echo "SSCAN=$(M_SSCAN)"         >> $(M_IP)/configure/RELEASE
 	echo "SNCSEQ=$(M_SNCSEQ)"       >> $(M_IP)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_IP)/configure/RELEASE
 #	BASE[o], ASYN[o], BUSY[o], IPAC[o], SNCSEQ[o]
