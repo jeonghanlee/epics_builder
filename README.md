@@ -1,60 +1,76 @@
 # epics_builder
 
-EPICS Building Environment, works with epics_manifest [1].
+EPICS Building Environment, works with epics_manifest [1] and Repo [2].
 
 
-## Repo
+## Preparation
 
-```
-mkdir -p ~/bin
-export PATH=~/bin:$PATH
-curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
-chmod a+x ~/bin/repo
-```
-
-
-## Init
-
-* Create the working directory
-```
-mkdir epics_env
-cd epics_env
-```
-
-* Initialize epics_env to use the default.xml on the master branch
+One needs to setup Repo as follows:
 
 ```
-repo init -u https://github.com/jeonghanlee/epics_manifest.git
+$ mkdir -p ~/bin
+$ export PATH=~/bin:$PATH
+$ curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+$ chmod a+x ~/bin/repo
 ```
 
 
-* Initialize epics_env to use the 1808.xml, on the master branch
+## Procedure
+
+### Step 1:  Create a directory
+```
+$ mkdir epics_env
+$ cd epics_env
+```
+
+### Step 2: Init
+
+
+* Initialize epics_env to use the default.xml [3] on the master branch
+
+```
+epics_env $ repo init -u https://github.com/jeonghanlee/epics_manifest.git
+```
+
+### Step 3: Sync
+
+```
+epics_env $ repo sync --no-clone-bundle
+```
+
+
+### Step 4: Build
+
+
+```
+epics_env $ bash pkg.bash
+epics_env $ make init
+epics_env $ make base
+epics_env $ make modules
+```
+
+### Step 5: Set the EPICS environment
+```
+epics_env $ source setEpicsEnv.bash
+```
+
+
+## Additional commands
+
+* Initialize epics_env to use the epics_1808.xml, on the master branch
 ```
 repo init -u https://github.com/jeonghanlee/epics_manifest.git -m epics_1808.xml
 ```
 
-
-* Sync
-```
-repo sync --no-clone-bundle
-```
 * Force Sync
 ```
 repo sync --force-sync --no-clone-bundle
 ```
 
-
-
-## Building EPICS and Modules
-
-
-```
-$ bash pkg.bash
-$ make init
-$ make base
-$ make modules
-$ source setEpicsEnv.bash
-```
-
+## References and comments
 
 [1] https://github.com/jeonghanlee/epics_manifest
+[2] https://gerrit.googlesource.com/git-repo/
+[3] default.xml is the symbolic link to epics_1808.xml
+
+
