@@ -18,9 +18,9 @@
 #   Shell   : setEpicsEnv.bash
 #   Author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Wednesday, August  1 01:40:02 CEST 2018
+#   date    : Thursday, August  2 01:28:12 CEST 2018
 #
-#   version : 1.0.0
+#   version : 1.0.1
 
 
 # the following function drop_from_path was copied from
@@ -80,6 +80,7 @@ function set_variable
 unset EPICS_PATH
 unset EPICS_BASE
 unset EPICS_MODULES
+unset EPICS_EXTENSIONS
 unset EPICS_APPS
 unset EPICS_HOST_ARCH
 
@@ -117,7 +118,13 @@ export EPICS_HOST_ARCH=$("${EPICS_BASE}/startup/EpicsHostArch.pl")
 old_path=${PATH}
 new_PATH="${EPICS_BASE}/bin/${EPICS_HOST_ARCH}"
 PATH=$(set_variable "${old_path}" "${new_PATH}")
+
+ext_path="${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH}"
+PATH=$(set_variable "${PATH}" "${ext_path}")
+
 export PATH
+
+
 
 old_ld_path=${LD_LIBRARY_PATH}
 new_LD_LIBRARY_PATH="${EPICS_BASE}/lib/${EPICS_HOST_ARCH}"

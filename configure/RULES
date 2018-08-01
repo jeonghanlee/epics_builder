@@ -26,16 +26,6 @@ epics: base modules
 clean: modules-clean base-clean
 	rm -f *~
 
-vars: env
-
-## Print basic EPICS environment variables
-env:
-	@echo ""
-	@echo "EPICS_BASE          : "$(EPICS_BASE)
-	@echo "EPICS_MODULES       : "$(EPICS_MODULES)
-	@echo "EPICS_HOST_ARCH     : "$(EPICS_HOST_ARCH)
-	@echo ""
-
 
 # Exclude EPICS_MODULES
 M_DIRS:=$(sort $(dir $(wildcard $(EPICS_MODULES)/*/.)))
@@ -45,13 +35,13 @@ dirs:
 
 
 
-.PHONY: help all epics clean vars env dirs
+.PHONY: help all epics clean dirs
 
-
+VARS_EXCLUDES+=M_DIRS
 
 include $(TOP)/builder/configure/RULES_BASE
 include $(TOP)/builder/configure/RULES_MODULES
 include $(TOP)/builder/configure/RULES_EXTENSIONS
-
+include $(TOP)/builder/configure/RULES_VARS
 
 

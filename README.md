@@ -55,6 +55,17 @@ epics_env $ source setEpicsEnv.bash
 ```
 
 
+## EPICS Extensions
+
+One can install the additional EPICS extensions such as medm and Striptool
+
+```
+epics_env $ make init-exts
+epics_env $ make exts
+```
+Step 5 in the above Procedure, also has the extension path.
+
+
 ## Additional commands
 
 * Initialize epics_env to use the epics_1808.xml, on the master branch

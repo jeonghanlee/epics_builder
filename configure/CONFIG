@@ -1,13 +1,5 @@
 
+include $(TOP)/builder/configure/CONFIG_VARS
+include $(TOP)/builder/configure/CONFIG_EPICS
+include $(TOP)/builder/configure/CONFIG_EXPORT
 
-EPICS_PATH=$(TOP)
-EPICS_BASE=$(TOP)/epics-base
-EPICS_MODULES=$(TOP)/epics-modules
-EPICS_EXTENSIONS=$(TOP)/extensions
-#EPICS_APPS=$(TOP)/epics-Apps
-EPICS_HOST_ARCH := $(shell $(EPICS_BASE)/startup/EpicsHostArch.pl)
-
-EXPORT_VARS+=$(filter EPICS_%,$(.VARIABLES))
-
-export_version=$(eval export $1)
-$(eval $(foreach v,$(EXPORT_VARS),$(call export_version,$v)))
