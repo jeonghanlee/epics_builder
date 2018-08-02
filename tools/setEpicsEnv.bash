@@ -20,7 +20,7 @@
 #   email   : jeonghan.lee@gmail.com
 #   date    : Thursday, August  2 01:28:12 CEST 2018
 #
-#   version : 1.0.1
+#   version : 1.1.0
 
 
 # the following function drop_from_path was copied from
@@ -100,47 +100,60 @@ unset EPICS_DRIVER_PATH
 unset SCRIPT_DIR
 
 
-
 THIS_SRC=${BASH_SOURCE[0]}
 SRC_PATH="$( cd -P "$( dirname "$THIS_SRC" )" && pwd )"
 SRC_NAME=${THIS_SRC##*/}
+REAL_SRC_PATH="/builder/tools"
 
 
-# epics_manifest will put this script in EPICS_PATH
+if [[ $SRC_PATH == *${REAL_SRC_PATH}* ]]; then
+    
+    printf "\nPlease do not source %s directly\n" "${SRC_NAME}"
+    printf "Your attepmt is forwarding to .... %s\n"  ${SRC_PATH}/../../;
+    sleep 5
+    cd  ${SRC_PATH}/../../
+    source ${SRC_NAME}
 
-export EPICS_PATH=${SRC_PATH}
-export EPICS_BASE=${EPICS_PATH}/epics-base
-export EPICS_EXTENSIONS=${EPICS_PATH}/extensions
-export EPICS_MODULES=${EPICS_PATH}/epics-modules
-export EPICS_APPS=${EPICS_PATH}/epics-Apps
-export EPICS_HOST_ARCH=$("${EPICS_BASE}/startup/EpicsHostArch.pl")
+else
 
-old_path=${PATH}
-new_PATH="${EPICS_BASE}/bin/${EPICS_HOST_ARCH}"
-PATH=$(set_variable "${old_path}" "${new_PATH}")
+    EPICS_PATH=${SRC_PATH}
+    EPICS_BASE=${EPICS_PATH}/epics-base
+    EPICS_HOST_ARCH=$("${EPICS_BASE}/startup/EpicsHostArch.pl")
+    EPICS_EXTENSIONS=${EPICS_PATH}/extensions
+    EPICS_MODULES=${EPICS_PATH}/epics-modules
+    EPICS_APPS=${EPICS_PATH}/epics-Apps
 
-ext_path="${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH}"
-PATH=$(set_variable "${PATH}" "${ext_path}")
+    export EPICS_PATH
+    export EPICS_BASE
+    export EPICS_EXTENSIONS
+    export EPICS_MODULES
+    export EPICS_APPS
+    export EPICS_HOST_ARCH
 
-export PATH
+    old_path=${PATH}
+    new_PATH="${EPICS_BASE}/bin/${EPICS_HOST_ARCH}"
+    PATH=$(set_variable "${old_path}" "${new_PATH}")
 
+    ext_path="${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH}"
+    PATH=$(set_variable "${PATH}" "${ext_path}")
+    export PATH
 
+    old_ld_path=${LD_LIBRARY_PATH}
+    new_LD_LIBRARY_PATH="${EPICS_BASE}/lib/${EPICS_HOST_ARCH}"
 
-old_ld_path=${LD_LIBRARY_PATH}
-new_LD_LIBRARY_PATH="${EPICS_BASE}/lib/${EPICS_HOST_ARCH}"
+    LD_LIBRARY_PATH=$(set_variable "${old_ld_path}" "${new_LD_LIBRARY_PATH}")
 
-LD_LIBRARY_PATH=$(set_variable "${old_ld_path}" "${new_LD_LIBRARY_PATH}")
-export LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH
 
-printf "\nSet the EPICS Environment as follows:\n";
-printf "THIS Source NAME    : %s\n" "${SRC_NAME}"
-printf "THIS Source PATH    : %s\n" "${SRC_PATH}"
-printf "EPICS_BASE          : %s\n" "${EPICS_BASE}"
-printf "EPICS_HOST_ARCH     : %s\n" "${EPICS_HOST_ARCH}"
-printf "EPICS_MODULES       : %s\n" "${EPICS_MODULES}"
-printf "PATH                : %s\n" "${PATH}"
-printf "LD_LIBRARY_PATH     : %s\n" "${LD_LIBRARY_PATH}"
-printf "\n";
-printf "Enjoy Everlasting EPICS!\n";
+    printf "\nSet the EPICS Environment as follows:\n";
+    printf "THIS Source NAME    : %s\n" "${SRC_NAME}"
+    printf "THIS Source PATH    : %s\n" "${SRC_PATH}"
+    printf "EPICS_BASE          : %s\n" "${EPICS_BASE}"
+    printf "EPICS_HOST_ARCH     : %s\n" "${EPICS_HOST_ARCH}"
+    printf "EPICS_MODULES       : %s\n" "${EPICS_MODULES}"
+    printf "PATH                : %s\n" "${PATH}"
+    printf "LD_LIBRARY_PATH     : %s\n" "${LD_LIBRARY_PATH}"
+    printf "\n";
+    printf "Enjoy Everlasting EPICS!\n";
 
-
+fi
