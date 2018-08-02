@@ -109,7 +109,7 @@ REAL_SRC_PATH="/builder/tools"
 if [[ $SRC_PATH == *${REAL_SRC_PATH}* ]]; then
     
     printf "\nPlease do not source %s directly\n" "${SRC_NAME}"
-    printf "Your attepmt is forwarding to .... %s\n"  ${SRC_PATH}/../../;
+    printf "Your attempt is forwarding to .... %s\n"  ${SRC_PATH}/../../;
     sleep 5
     cd  ${SRC_PATH}/../../
     source ${SRC_NAME}
