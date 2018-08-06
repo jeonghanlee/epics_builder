@@ -12,6 +12,7 @@ M_IOCSTATS=$(EPICS_MODULES)/iocStats
 M_SSCAN=$(EPICS_MODULES)/sscan
 #BASE[o], IPAC[o], SNCSEQ[o]
 M_ASYN=$(EPICS_MODULES)/asyn
+M_ASYN_USBTMC=$(EPICS_MODULES)/asyn-usbtmc
 #BASE[o], ASYN[o]
 M_BUSY=$(EPICS_MODULES)/busy
 M_MODBUS=$(EPICS_MODULES)/modbus
@@ -45,6 +46,7 @@ modules: release
 	$(MAKE) -C $(M_SSCAN)
 #	BASE[o], IPAC[o], SNCSEQ[o]
 	$(MAKE) -C $(M_ASYN)
+	$(MAKE) -C $(M_ASYN_USBTMC)
 #	BASE[o], ASYN[o]
 	$(MAKE) -C $(M_BUSY)
 	$(MAKE) -C $(M_MODBUS)
@@ -77,6 +79,14 @@ release:
 	echo "IPAC=$(M_IPAC)"            > $(M_ASYN)/configure/RELEASE
 	echo "SNCSEQ=$(M_SNCSEQ)"       >> $(M_ASYN)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_ASYN)/configure/RELEASE
+	echo "IPAC=$(M_IPAC)"            > $(M_ASYN_USBTMC)/configure/RELEASE
+	echo "SNCSEQ=$(M_SNCSEQ)"       >> $(M_ASYN_USBTMC)/configure/RELEASE
+	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_ASYN_USBTMC)/configure/RELEASE
+	echo "CHECK_RELEASE = YES"            > $(M_ASYN_USBTMC)/configure/CONFIG_SITE
+	echo "LINUX_GPIB=NO"                 >> $(M_ASYN_USBTMC)/configure/CONFIG_SITE
+	echo "ifeq (linux-x86_64, \$$(T_A))" >> $(M_ASYN_USBTMC)/configure/CONFIG_SITE
+	echo " DRV_USBTMC=YES"               >> $(M_ASYN_USBTMC)/configure/CONFIG_SITE
+	echo "endif"                         >> $(M_ASYN_USBTMC)/configure/CONFIG_SITE
 #	BASE[o], ASYN[o]
 	echo "ASYN=$(M_ASYN)"            > $(M_BUSY)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_BUSY)/configure/RELEASE
