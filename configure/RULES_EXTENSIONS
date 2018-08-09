@@ -2,7 +2,8 @@
 init-exts:
 	cd $(EPICS_EXTENSIONS) && git submodule update --init --reference ./
 	bash $(EPICS_EXTENSIONS)/patch_no_Xp.bash
-
+	bash $(EPICS_EXTENSIONS)/patch_libXm.bash
+	
 ## Build Extensions 
 exts: exts-release
 	$(MAKE) -C $(EPICS_EXTENSIONS)
