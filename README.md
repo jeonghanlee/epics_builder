@@ -95,12 +95,17 @@ DEVIOCSTATS
 SSCAN
 ```
 
+```
+epics_env $ make init-ad
+epics_env $ make ad
+```
+
 
 ## Additional commands
 
-* Initialize epics_env to use the epics_180802.xml, on the master branch
+* Initialize epics_env to use the epics_180811.xml, on the master branch
 ```
-repo init -u https://github.com/jeonghanlee/epics_manifest.git -m epics_180802.xml
+repo init -u https://github.com/jeonghanlee/epics_manifest.git -m epics_180811.xml
 ```
 
 * Force Sync
