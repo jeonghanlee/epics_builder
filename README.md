@@ -66,6 +66,36 @@ epics_env $ make exts
 Step 5 in the above Procedure, also has the extension path.
 
 
+## AreaDetector
+
+One can also install few predefined and selected Area Detector and its Plugin. Note that it will clone all plugin in a local directory even if few selected one will be installed. 
+
+```
+ADCore
+ADSupport
+ADSIMDETECTOR
+ADCSIMDETECTOR
+ADPOINTGREY
+ADANDOR
+ADANDOR3
+ADPROSILICA
+NDDRIVERSTDARRAYS
+PVADRIVER
+ADURL
+```
+And it also enable the following epics modules as:
+
+```
+ASYN
+AUTOSAVE
+BUSY
+CALC
+SNCSEQ
+DEVIOCSTATS
+SSCAN
+```
+
+
 ## Additional commands
 
 * Initialize epics_env to use the epics_180802.xml, on the master branch
