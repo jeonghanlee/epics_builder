@@ -101,6 +101,28 @@ epics_env $ make ad
 ```
 
 
+## VisualDCT
+
+One can install VisualDCT in EPICS_EXTENSIONS. If one would like to do, please run ```installVisualDCT```.
+
+
+## Platform Path
+In the directory, one can find the following additional tools which allow users to install few more enviornment or libraries. For further information, please look at corresponding url
+
+### ethercat
+* https://github.com/icshwi/etherlabmaster
+
+### lmfit
+* https://github.com/jeonghanlee/lmfit-env
+
+### opencv
+* https://github.com/jeonghanlee/opencv-env
+
+### nioc
+* https://github.com/jeonghanlee/epics_NIOCs
+
+
+
 ## Additional commands
 
 * Initialize epics_env to use the epics_180811.xml, on the master branch
@@ -116,7 +138,7 @@ repo sync --force-sync --no-clone-bundle
 ## References and comments
 
 [1] https://github.com/jeonghanlee/epics_manifest   
-[2] https://gerrit.googlesource.com/git-repo/    
-[3] default.xml is the symbolic link to epics_180811.xml   
+[2] https://gerrit.googlesource.com/git-repo/
+[3] default.xml is the symbolic link to epics_180813.xml
 
 
