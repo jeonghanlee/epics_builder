@@ -1,11 +1,24 @@
 #!/bin/bash
+#  Copyright (c) 2016 - Present  Jeong Han Lee
 #
+#  The program is free software: you can redistribute
+#  it and/or modify it under the terms of the GNU General Public License
+#  as published by the Free Software Foundation, either version 2 of the
+#  License, or any newer version.
 #
-# Shell  : epics_vdct.sh
-# Author : Jeong Han Lee
-# email  : jeonghan.lee@gmail.com
-# Date   : Friday, September  2 13:04:24 CEST 2016
-# version : 0.1.0
+#  This program is distributed in the hope that it will be useful, but WITHOUT
+#  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+#  FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+#  more details.
+#
+#  You should have received a copy of the GNU General Public License along with
+#  this program. If not, see https://www.gnu.org/licenses/gpl-2.0.txt
+
+#  Shell   : setupVDCT.bash
+#  Author  : Jeong Han Lee
+#  email   : jeonghan.lee@gmail.com
+#  Date    : Monday, August 13 23:54:33 CEST 2018
+#  version : 0.2.0
 
 
 wget_options="wget -c"
@@ -50,7 +63,7 @@ make_vdct()
     # Force (-o option) to overwrite when the target files are in the target directory,
     # so it will prevent the duplicated entries in the below sed procedure.
     #
-    unzip -oq -d ${vdct_full_path} ${vdct_filename}
+    unzip -oq -d ${vdct_full_path} ${vdct_filename} ||  die 1 "${FUNCNAME[*]} : Fail unzip : Please check it" ;
 
     popd
 
@@ -98,6 +111,8 @@ make_vdct
 
 # do we need to clean? 
 #rm -rf ${temp_downloads}
+
+exit;
 
 
 
