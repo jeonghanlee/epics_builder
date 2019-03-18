@@ -19,8 +19,8 @@ modules: release
 release:
 #	BASE[o]
 	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_AUTOSAVE)/configure/RELEASE
-	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_IOCSTATS)/configure/RELEASE
-	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_ASYN)/configure/RELEASE
+	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_IOCSTATS)/configure/RELEASE
+	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_ASYN)/configure/RELEASE
 	echo "ASYN=$(M_ASYN)"            > $(M_STREAM)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_STREAM)/configure/RELEASE
 
