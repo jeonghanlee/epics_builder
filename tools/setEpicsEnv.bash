@@ -1,5 +1,5 @@
 #!/bin/bash
-#  Copyright (c) 2017 - Present  Jeong Han Lee
+#  Copyright (c) 2017 - 2019  Jeong Han Lee
 #  Copyright (c) 2017 - 2018  European Spallation Source ERIC
 #
 #  The program is free software: you can redistribute
@@ -18,9 +18,9 @@
 #   Shell   : setEpicsEnv.bash
 #   Author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Tuesday, August 28 00:03:00 CEST 2018
+#   date    : Monday, March 18 21:09:07 CET 2019
 #
-#   version : 1.2.0
+#   version : 1.2.1
 
 
 # the following function drop_from_path was copied from
@@ -198,7 +198,12 @@ else
     EPICS_EXTENSIONS=${EPICS_PATH}/extensions
     EPICS_AREADETECTOR=${EPICS_PATH}/areaDetector
     EPICS_APPS=${EPICS_PATH}/epics-Apps
-    EPICS_HOST_ARCH=$("${EPICS_BASE}/startup/EpicsHostArch.pl")
+    epics_host_arch_file="${EPICS_BASE}/startup/EpicsHostArch.pl"
+    if [ -e "$epics_host_arch_file" ]; then
+	EPICS_HOST_ARCH=$("${EPICS_BASE}/startup/EpicsHostArch.pl")
+    else
+	EPICS_HOST_ARCH=$(perl ${EPICS_BASE}/lib/perl/EpicsHostArch.pl)
+    fi
 
 
     export EPICS_PATH
