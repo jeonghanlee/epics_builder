@@ -5,10 +5,10 @@ EPICS_MODULES=$(TOP)/epics-modules
 EPICS_EXTENSIONS=$(TOP)/extensions
 EPICS_AREADETECTOR=$(TOP)/areaDetector
 EPICS_APPS=$(TOP)/epics-Apps
-EPICS_HOST_ARCH:=$(shell $(TOP)/$(E3_BASE_SRC_PATH)/startup/EpicsHostArch.pl 2> /dev/null)
+EPICS_HOST_ARCH:=$(shell $(EPICS_BASE)/startup/EpicsHostArch.pl 2> /dev/null)
 
 # In near future, BASE may drop "startup" directory, so
 #
 ifeq ($(strip $(EPICS_HOST_ARCH)),)
-EPICS_HOST_ARCH:=$(shell perl $(TOP)/$(E3_BASE_SRC_PATH)/src/tools/EpicsHostArch.pl 2> /dev/null)
+EPICS_HOST_ARCH:=$(shell perl $(EPICS_BASE)/src/tools/EpicsHostArch.pl 2> /dev/null)
 endif
