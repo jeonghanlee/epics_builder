@@ -1,0 +1,75 @@
+-*- mode: Makefile;-*-
+## Init AreaDetector
+init-ad:
+	cd $(EPICS_AREADETECTOR) && git submodule update --init --reference ./
+
+## Build AreaDetector
+ad: ad-release 
+	$(MAKE) -C $(EPICS_AREADETECTOR)
+
+## Clean AreaDetector
+ad-clean: ad-release
+	$(MAKE) -C $(EPICS_AREADETECTOR) clean
+
+## Makefile in areadetector
+ad-release:
+	echo "# we don't use SUPPORT"                      > $(EPICS_AREADETECTOR)/configure/RELEASE_SUPPORT.local
+	echo ""
+	echo "ADSUPPORT=$(M_ADSUPPORT)"                    > $(EPICS_AREADETECTOR)/configure/RELEASE.local
+	echo "ADCSIMDETECTOR=$(M_ADCSIMDETECTOR)"         >> $(EPICS_AREADETECTOR)/configure/RELEASE.local
+	echo "ADSIMDETECTOR=$(M_ADSIMDETECTOR)"           >> $(EPICS_AREADETECTOR)/configure/RELEASE.local 
+	echo "ADPOINTGREY=$(M_ADPOINTGREY)"               >> $(EPICS_AREADETECTOR)/configure/RELEASE.local
+	echo "ADANDOR=$(M_ADANDOR)"                       >> $(EPICS_AREADETECTOR)/configure/RELEASE.local
+	echo "ADANDOR3=$(M_ADANDOR3)"                     >> $(EPICS_AREADETECTOR)/configure/RELEASE.local
+	echo "ADPROSILICA=$(M_ADPROSILICA)"               >> $(EPICS_AREADETECTOR)/configure/RELEASE.local
+	echo "NDDRIVERSTDARRAYS=$(M_NDDRIVERSTDARRAYS)"   >> $(EPICS_AREADETECTOR)/configure/RELEASE.local
+	echo "PVADRIVER=$(M_PVADRIVER)"                   >> $(EPICS_AREADETECTOR)/configure/RELEASE.local
+	echo "ADURL=$(M_ADURL)"                           >> $(EPICS_AREADETECTOR)/configure/RELEASE.local
+#	echo "ADSPINNAKER=$(M_ADSPINNAKER)"               >> $(EPICS_AREADETECTOR)/configure/RELEASE.local
+	echo ""
+	echo "ASYN=$(M_ASYN)"                              > $(EPICS_AREADETECTOR)/configure/RELEASE_LIBS.local
+	echo "AREA_DETECTOR=$(EPICS_AREADETECTOR)"        >> $(EPICS_AREADETECTOR)/configure/RELEASE_LIBS.local
+	echo "ADSUPPORT=$(EPICS_AREADETECTOR)/ADSupport"  >> $(EPICS_AREADETECTOR)/configure/RELEASE_LIBS.local
+	echo "ADCORE=$(EPICS_AREADETECTOR)/ADCore"        >> $(EPICS_AREADETECTOR)/configure/RELEASE_LIBS.local
+	echo "EPICS_BASE=$(EPICS_BASE)"                   >> $(EPICS_AREADETECTOR)/configure/RELEASE_LIBS.local
+	echo ""
+	echo "ASYN=$(M_ASYN)"                              > $(EPICS_AREADETECTOR)/configure/RELEASE_PRODS.local
+	echo "AREA_DETECTOR=$(EPICS_AREADETECTOR)"        >> $(EPICS_AREADETECTOR)/configure/RELEASE_PRODS.local
+	echo "ADSUPPORT=$(EPICS_AREADETECTOR)/ADSupport"  >> $(EPICS_AREADETECTOR)/configure/RELEASE_PRODS.local
+	echo "ADCORE=$(EPICS_AREADETECTOR)/ADCore"        >> $(EPICS_AREADETECTOR)/configure/RELEASE_PRODS.local
+	echo "AUTOSAVE=$(M_AUTOSAVE)"                     >> $(EPICS_AREADETECTOR)/configure/RELEASE_PRODS.local
+	echo "BUSY=$(M_BUSY)"                             >> $(EPICS_AREADETECTOR)/configure/RELEASE_PRODS.local
+	echo "CALC=$(M_CALC)"                             >> $(EPICS_AREADETECTOR)/configure/RELEASE_PRODS.local
+	echo "SNCSEQ=$(M_SNCSEQ)"                         >> $(EPICS_AREADETECTOR)/configure/RELEASE_PRODS.local
+	echo "SSCAN=$(M_SSCAN)"                           >> $(EPICS_AREADETECTOR)/configure/RELEASE_PRODS.local
+	echo "DEVIOCSTATS=$(M_IOCSTATS)"                  >> $(EPICS_AREADETECTOR)/configure/RELEASE_PRODS.local
+	echo "EPICS_BASE=$(EPICS_BASE)"                   >> $(EPICS_AREADETECTOR)/configure/RELEASE_PRODS.local
+	echo ""
+	echo "BUILD_IOCS=YES"                              > $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "WITH_BOOST=NO"                              >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "WITH_PVA=YES"                               >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "WITH_QSRV=YES"                              >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "WITH_BLOSC=YES"                             >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "BLOSC_EXTERNAL=NO"                          >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "WITH_GRAPHICSMAGICK=YES"                    >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "GRAPHICSMAGICK_EXTERNAL=NO"                 >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "GRAPHICSMAGICK_PREFIX_SYMBOLS=YES"          >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "WITH_HDF5=YES"                              >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "HDF5_EXTERNAL=NO"                           >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "WITH_JPEG=YES"                              >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "JPEG_EXTERNAL=NO"                           >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "WITH_NETCDF=YES"                            >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "NETCDF_EXTERNAL=NO"                         >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "WITH_NEXUS=YES"                             >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "NEXUS_EXTERNAL=NO"                          >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "WITH_OPENCV=NO"                             >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "OPENCV_EXTERNAL=YES"                        >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "WITH_SZIP=YES"                              >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "SZIP_EXTERNAL=NO"                           >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "WITH_TIFF=YES"                              >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "TIFF_EXTERNAL=NO"                           >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "XML2_EXTERNAL=NO"                           >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "WITH_ZLIB=YES"                              >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+	echo "ZLIB_EXTERNAL=NO"                           >> $(EPICS_AREADETECTOR)/configure/CONFIG_SITE.local
+
+.PHONY: init-ad ad ad-clean ad-release

@@ -18,9 +18,9 @@
 #   Shell   : setEpicsEnv.bash
 #   Author  : Jeong Han Lee
 #   email   : jeonghan.lee@gmail.com
-#   date    : Thursday, August  2 01:28:12 CEST 2018
+#   date    : Tuesday, August 28 00:03:00 CEST 2018
 #
-#   version : 1.1.0
+#   version : 1.2.0
 
 
 # the following function drop_from_path was copied from
@@ -77,27 +77,103 @@ function set_variable
 }
 
 
-unset EPICS_PATH
-unset EPICS_BASE
-unset EPICS_MODULES
-unset EPICS_EXTENSIONS
-unset EPICS_APPS
-unset EPICS_HOST_ARCH
 
-# In case, ESS E3 is configured.
+# Reset all EPICS, E3, and EEE related PRE-EXIST VARIABLES
+# Remove them from PATH and LD_LIBRARY_PATH
+# 
+# If EPICS_BASE is defined,
+# 1) Remove EPICS_BASE bin in the system PATH
+# 2) Remove EPICS_BASE lib in the system LD_LIBRARY_PATH
+# 3) Unset EPICS_BASE, EPICS_HOST_ARCH, and so on
+if [ -n "$EPICS_BASE" ]; then
+    
+    system_path=${PATH}
+    drop_base_path="${EPICS_BASE}/bin/${EPICS_HOST_ARCH}"
+    
+    PATH=$(drop_from_path "${system_path}" "${drop_base_path}")
+    export PATH
+    
+    system_ld_path=${LD_LIBRARY_PATH}
+    drop_ld_path="${EPICS_BASE}/lib/${EPICS_HOST_ARCH}"
+    
+    LD_LIBRARY_PATH=$(drop_from_path "${system_ld_path}" "${drop_ld_path}")
+    export LD_LIBRARY_PATH
+    
+    # If EPICS_ENTENSIONS, it is epics_builder
+    if [ -n "$EPICS_EXTENSIONS" ]; then
+	ext_path=${PATH}
+	drop_ext_path="${EPICS_EXTENSIONS}/bin/${EPICS_HOST_ARCH}"
+	
+	PATH=$(drop_from_path "${ext_path}" "${drop_ext_path}")
+	export PATH
+	
+	unset EPICS_EXTENSIONS
+	unset EPICS_PATH
+	unset EPICS_MODULES
+	unset EPICS_EXTENSIONS
+	unset EPICS_AREADETECTOR
+	unset EPICS_APPS
+    fi
 
-unset E3_REQUIRE_NAME
-unset E3_REQUIRE_VERSION
-unset E3_REQUIRE_LOCATION
-unset E3_REQUIRE_BIN
-unset E3_REQUIRE_LIB
-unset E3_REQUIRE_INC
-unset E3_REQUIRE_DB
-unset E3_SITEMODS_PATH
-unset E3_SITELIBS_PATH
-unset E3_SITEAPPS_PATH
-unset EPICS_DRIVER_PATH
-unset SCRIPT_DIR
+    # If E3_REQUIRE_NAME, it is E3
+    if [ -n "$E3_REQUIRE_NAME" ]; then
+
+	e3_path=${PATH}
+	
+	PATH=$(drop_from_path "${e3_path}" "${E3_REQUIRE_BIN}")
+	export PATH
+	
+	e3_ld_path=${LD_LIBRARY_PATH}
+	drop_e3_ld_path1="${E3_REQUIRE_LIB}/${EPICS_HOST_ARCH}"
+	drop_e3_ld_path2="${E3_SITELIBS_PATH}/${EPICS_HOST_ARCH}"
+	e3_ld_path_0=$(drop_from_path "${e3_ld_path}" "${drop_e3_ld_path1}")
+	
+	LD_LIBRARY_PATH=$(drop_from_path "${e3_ld_path_0}" "${drop_e3_ld_path2}")
+	export LD_LIBRARY_PATH
+	
+	unset E3_REQUIRE_NAME
+	unset E3_REQUIRE_VERSION
+	unset E3_REQUIRE_LOCATION
+	
+	unset E3_REQUIRE_BIN
+	unset E3_REQUIRE_LIB
+	unset E3_REQUIRE_INC
+	unset E3_REQUIRE_DB
+	
+	unset E3_SITEMODS_PATH
+	unset E3_SITELIBS_PATH
+	unset E3_SITEAPPS_PATH
+        
+	unset EPICS_DRIVER_PATH
+	unset SCRIPT_DIR
+	
+    fi
+    
+    # If EPICS_ENV_PATH, it is EEE
+    if [ -n "$EPICS_ENV_PATH" ]; then
+
+	eee_path=${PATH}
+	PATH=$(drop_from_path "${eee_path}" "${EPICS_ENV_PATH}")
+	export PATH
+
+	eee_pvaccess_path=${PATH}
+	drop_eee_pvaccess_path="${EPICS_MODULES_PATH}/pvAccessCPP/5.0.0/${BASE}/bin/${EPICS_HOST_ARCH}"
+	
+	PATH=$(drop_from_path "${eee_pvaccess_path}" "${drop_eee_pvaccess_path}")
+	export PATH
+	
+	unset EPICS_BASES_PATH
+	unset EPICS_MODULES_PATH
+	unset BASE
+	unset EPICS_ENV_PATH
+	unset PYTHONPATH
+    fi
+    
+    unset EPICS_BASE
+    unset EPICS_HOST_ARCH
+    
+fi
+
 
 
 THIS_SRC=${BASH_SOURCE[0]}
@@ -118,15 +194,18 @@ else
 
     EPICS_PATH=${SRC_PATH}
     EPICS_BASE=${EPICS_PATH}/epics-base
-    EPICS_HOST_ARCH=$("${EPICS_BASE}/startup/EpicsHostArch.pl")
-    EPICS_EXTENSIONS=${EPICS_PATH}/extensions
     EPICS_MODULES=${EPICS_PATH}/epics-modules
+    EPICS_EXTENSIONS=${EPICS_PATH}/extensions
+    EPICS_AREADETECTOR=${EPICS_PATH}/areaDetector
     EPICS_APPS=${EPICS_PATH}/epics-Apps
+    EPICS_HOST_ARCH=$("${EPICS_BASE}/startup/EpicsHostArch.pl")
+
 
     export EPICS_PATH
     export EPICS_BASE
-    export EPICS_EXTENSIONS
     export EPICS_MODULES
+    export EPICS_EXTENSIONS
+    export EPICS_AREADETECTOR
     export EPICS_APPS
     export EPICS_HOST_ARCH
 

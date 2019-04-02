@@ -1,6 +1,7 @@
 
 
 EXPORT_VARS+=$(filter EPICS_%,$(.VARIABLES))
+EXPORT_VARS+=$(filter M_%,$(.VARIABLES))
 
 export_version=$(eval export $1)
 $(eval $(foreach v,$(EXPORT_VARS),$(call export_version,$v)))

@@ -42,6 +42,7 @@ VARS_EXCLUDES+=M_DIRS
 include $(TOP)/builder/configure/RULES_BASE
 include $(TOP)/builder/configure/RULES_MODULES
 include $(TOP)/builder/configure/RULES_EXTENSIONS
+include $(TOP)/builder/configure/RULES_AREADETECTOR
 include $(TOP)/builder/configure/RULES_VARS
 
 

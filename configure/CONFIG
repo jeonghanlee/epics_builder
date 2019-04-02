@@ -1,5 +1,7 @@
 
 include $(TOP)/builder/configure/CONFIG_VARS
 include $(TOP)/builder/configure/CONFIG_EPICS
+include $(TOP)/builder/configure/CONFIG_MODULES
+include $(TOP)/builder/configure/CONFIG_AREADETECTOR
 include $(TOP)/builder/configure/CONFIG_EXPORT
 
