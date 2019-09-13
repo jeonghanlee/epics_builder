@@ -1,7 +1,7 @@
 -*- mode: Makefile;-*-
 ## Init AreaDetector
 init-ad:
-	cd $(EPICS_AREADETECTOR) && git submodule update --init --reference ./
+	cd $(EPICS_AREADETECTOR) && git submodule update --init ./
 
 ## Build AreaDetector
 ad: ad-release 

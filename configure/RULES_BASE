@@ -1,7 +1,7 @@
 
 
 init:
-	cd $(EPICS_BASE) && git submodule update --init --reference ./
+	cd $(EPICS_BASE) && git submodule update --init ./
 	
 
 ## Setup only EPICS BASE, needed to execute modules
