@@ -25,7 +25,8 @@ ad-release:
 	echo "NDDRIVERSTDARRAYS=$(M_NDDRIVERSTDARRAYS)"   >> $(EPICS_AREADETECTOR)/configure/RELEASE.local
 	echo "PVADRIVER=$(M_PVADRIVER)"                   >> $(EPICS_AREADETECTOR)/configure/RELEASE.local
 	echo "ADURL=$(M_ADURL)"                           >> $(EPICS_AREADETECTOR)/configure/RELEASE.local
-#	echo "ADSPINNAKER=$(M_ADSPINNAKER)"               >> $(EPICS_AREADETECTOR)/configure/RELEASE.local
+	echo "ADGENICAM=$(M_ADGENICAM)"                   >> $(EPICS_AREADETECTOR)/configure/RELEASE.local
+	echo "ADSPINNAKER=$(M_ADSPINNAKER)"               >> $(EPICS_AREADETECTOR)/configure/RELEASE.local
 	echo ""
 	echo "ASYN=$(M_ASYN)"                              > $(EPICS_AREADETECTOR)/configure/RELEASE_LIBS.local
 	echo "AREA_DETECTOR=$(EPICS_AREADETECTOR)"        >> $(EPICS_AREADETECTOR)/configure/RELEASE_LIBS.local
