@@ -6,8 +6,11 @@ M_DIRS:=$(sort $(dir $(wildcard */)))
 
 all: modules
 
+MODNAME?=recsync
+
 modules: release
 #	BASE[o]
+	$(MAKE) -C $(M_RECSYNC)
 	$(MAKE) -C $(M_AUTOSAVE)
 	$(MAKE) -C $(M_IPAC)
 	$(MAKE) -C $(M_DEVLIB2)
@@ -37,6 +40,7 @@ modules: release
 
 release:
 #	BASE[o]
+	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_RECSYNC)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_AUTOSAVE)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_IPAC)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_DEVLIB2)/configure/RELEASE.local
