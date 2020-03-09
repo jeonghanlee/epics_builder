@@ -40,7 +40,9 @@ modules: release
 
 release:
 #	BASE[o]
-	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_RECSYNC)/configure/RELEASE
+	echo "EPICS_BASE=$(EPICS_BASE)"         > $(M_RECSYNC)/configure/RELEASE.local
+	echo "USR_CPPFLAGS += -DUSE_TYPED_RSET" > $(M_RECSYNC)/configure/CONFIG_SITE
+#
 	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_AUTOSAVE)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_IPAC)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_DEVLIB2)/configure/RELEASE.local
