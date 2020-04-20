@@ -16,6 +16,7 @@ modules: release
 	$(MAKE) -C $(M_DEVLIB2)
 	$(MAKE) -C $(M_SNCSEQ)
 	$(MAKE) -C $(M_SNMP)
+	$(MAKE) -C $(M_CAPUTLOG)
 #	BASE[o], SNCSEQ[o]
 	$(MAKE) -C $(M_IOCSTATS)
 	$(MAKE) -C $(M_SSCAN)
@@ -48,6 +49,7 @@ release:
 	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_DEVLIB2)/configure/RELEASE.local
 	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_SNCSEQ)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_SNMP)/configure/RELEASE
+	echo "EPICS_BASE=$(EPICS_BASE)"  > $(M_CAPUTLOG)/configure/RELEASE.local
 #	BASE[o], SNCSEQ[o]
 	echo "SNCSEQ=$(M_SNCSEQ)"        > $(M_IOCSTATS)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_IOCSTATS)/configure/RELEASE
