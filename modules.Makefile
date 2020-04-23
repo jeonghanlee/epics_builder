@@ -26,6 +26,7 @@ modules: release
 #	BASE[o], ASYN[o]
 	$(MAKE) -C $(M_BUSY)
 	$(MAKE) -C $(M_MODBUS)
+	$(MAKE) -C $(M_LUA)
 	cd $(M_STREAM) && git submodule update --init --reference ./
 	$(MAKE) -C $(M_STREAM)
 #	BASE[o], SSCAN[o], SNCSEQ[o]
@@ -74,6 +75,8 @@ release:
 	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_MODBUS)/configure/RELEASE
 	echo "ASYN=$(M_ASYN)"            > $(M_STREAM)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_STREAM)/configure/RELEASE
+	echo "ASYN=$(M_ASYN)"            > $(M_LUA)/configure/RELEASE.local
+	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_LUA)/configure/RELEASE.local
 
 #	BASE[o], SSCAN[o], SNCSEQ[o]
 	echo "SSCAN=$(M_SSCAN)"          > $(M_CALC)/configure/RELEASE
