@@ -33,6 +33,7 @@ modules: release
 	$(MAKE) -C $(M_CALC)
 	$(MAKE) -C $(M_STD)
 	$(MAKE) -C $(M_IP)
+
 #	BASE[o], ASYN[o], BUSY[o], IPAC[o], SNCSEQ[o]
 	$(MAKE) -C $(M_MOTOR)
 #	BASE[o], DEVLIB2[o], DEVIOCSTATS[o], AUTOSAVE[x], CAPUTLOG[x]
@@ -60,14 +61,15 @@ release:
 	echo "IPAC=$(M_IPAC)"            > $(M_ASYN)/configure/RELEASE
 	echo "SNCSEQ=$(M_SNCSEQ)"       >> $(M_ASYN)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_ASYN)/configure/RELEASE
-	echo "IPAC=$(M_IPAC)"            > $(M_ASYN_USBTMC)/configure/RELEASE
-	echo "SNCSEQ=$(M_SNCSEQ)"       >> $(M_ASYN_USBTMC)/configure/RELEASE
-	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_ASYN_USBTMC)/configure/RELEASE
-	echo "CHECK_RELEASE = YES"            > $(M_ASYN_USBTMC)/configure/CONFIG_SITE
-	echo "LINUX_GPIB=NO"                 >> $(M_ASYN_USBTMC)/configure/CONFIG_SITE
-	echo "ifeq (linux-x86_64, \$$(T_A))" >> $(M_ASYN_USBTMC)/configure/CONFIG_SITE
-	echo " DRV_USBTMC=YES"               >> $(M_ASYN_USBTMC)/configure/CONFIG_SITE
-	echo "endif"                         >> $(M_ASYN_USBTMC)/configure/CONFIG_SITE
+	echo "TIRPC=YES"                 > $(M_ASYN)/configure/CONFIG_SITE
+#	echo "IPAC=$(M_IPAC)"            > $(M_ASYN_USBTMC)/configure/RELEASE
+#	echo "SNCSEQ=$(M_SNCSEQ)"       >> $(M_ASYN_USBTMC)/configure/RELEASE
+#	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_ASYN_USBTMC)/configure/RELEASE
+#	echo "CHECK_RELEASE = YES"            > $(M_ASYN_USBTMC)/configure/CONFIG_SITE
+#	echo "LINUX_GPIB=NO"                 >> $(M_ASYN_USBTMC)/configure/CONFIG_SITE
+#	echo "ifeq (linux-x86_64, \$$(T_A))" >> $(M_ASYN_USBTMC)/configure/CONFIG_SITE
+#	echo " DRV_USBTMC=YES"               >> $(M_ASYN_USBTMC)/configure/CONFIG_SITE
+#	echo "endif"                         >> $(M_ASYN_USBTMC)/configure/CONFIG_SITE
 #	BASE[o], ASYN[o]
 	echo "ASYN=$(M_ASYN)"            > $(M_BUSY)/configure/RELEASE
 	echo "EPICS_BASE=$(EPICS_BASE)" >> $(M_BUSY)/configure/RELEASE
