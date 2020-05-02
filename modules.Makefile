@@ -22,7 +22,7 @@ modules: release
 	$(MAKE) -C $(M_SSCAN)
 #	BASE[o], IPAC[o], SNCSEQ[o]
 	$(MAKE) -C $(M_ASYN)
-	$(MAKE) -C $(M_ASYN_USBTMC)
+#	$(MAKE) -C $(M_ASYN_USBTMC)
 #	BASE[o], ASYN[o]
 	$(MAKE) -C $(M_BUSY)
 	$(MAKE) -C $(M_MODBUS)
