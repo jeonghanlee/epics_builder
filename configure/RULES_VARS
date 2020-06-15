@@ -1,6 +1,4 @@
 
-EPICS_BUILDER_VARIABLES:=$(sort $(filter-out $(VARS_EXCLUDES) VARS_EXCLUDES,$(.VARIABLES)))
-
 .PHONY : env vars header
 
 
@@ -18,7 +16,7 @@ endif
 env: vars
 
 vars: header
-	$(foreach v, $(EPICS_BUILDER_VARIABLES), $(info $(v) = $($(v)))) @#noop
+	$(foreach v, $(SRC_VARIABLES), $(info $(v) = $($(v)))) @#noop
 
 header:
 	$(QUIET)echo ""
