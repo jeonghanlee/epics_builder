@@ -4,6 +4,16 @@ EPICS_BUILDER_VARIABLES:=$(sort $(filter-out $(VARS_EXCLUDES) VARS_EXCLUDES,$(.V
 .PHONY : env vars header
 
 
+FILTER?=1
+
+ifeq "$(FILTER)" "1"
+SRC_VARIABLES:=$(sort $(filter-out $(VARS_EXCLUDES) VARS_EXCLUDES,$(.VARIABLES)))
+else
+SRC_VARIABLES:=$(filter $(FILTER)%, $(sort $(filter-out $(VARS_EXCLUDES) VARS_EXCLUDES,$(.VARIABLES))))
+endif
+
+
+
 ## Print interesting VARIABLES
 env: vars
 
@@ -18,3 +28,12 @@ header:
 	$(QUIET)echo ""
 
 
+
+# https://www.cmcrossroads.com/article/printing-value-makefile-variable
+PRINT.%:
+	$(QUIET)echo $* = $($*)
+#	$(QUIET)echo $*\'s origin is $(origin $*)
+
+print-%:
+	$(QUIET)echo $* = $($*)
+#	$(QUIET)echo $*\'s origin is $(origin $*)

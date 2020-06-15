@@ -117,8 +117,8 @@ $(M_DIRS):
 
 
 dirs:
-	@echo $(M_DIRS) || true
-	@echo $(findstring asyn, $(M_DIRS))
+	@echo $(M_DIRS)
+#	@echo $(findstring asyn, $(M_DIRS))
 
 
 .PHONY: all modules release clean dirs $(M_DIRS) 
