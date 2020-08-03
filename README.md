@@ -1,5 +1,8 @@
 # epics_builder
 
+Please use the new developing env https://github.com/jeonghanlee/EPICS-env
+
+
 EPICS Building Environment, works with epics_manifest [1] and Repo [2].
 
 
